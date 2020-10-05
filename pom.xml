@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jfrog.reproducible</groupId>
+  <artifactId>parent</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <inceptionYear>2020</inceptionYear>
+  <organization>
+      <name>JFrog Ltd</name>
+      <url>http://www.jfrog.com</url>
+  </organization>
+  <licenses>
+        <license>
+            <name>Eclipse Public License 1.0</name>
+            <url>http://www.eclipse.org/legal/epl-v10.html</url>
+            <distribution>repo</distribution>
+        </license>
+  </licenses>
+  <developers>
+      <developer>
+          <id>johnp</id>
+          <name>John Peterson</name>
+          <email>johnp@jfrog.com</email>
+      </developer>
+  </developers>
+  <contributors>
+      <contributor>
+          <name>JFrog contributors</name>
+          <organization>JFrog</organization>
+          <email>partner-support@jfrog.com</email>
+          <url>https://github.com/jfrog</url>
+          <roles>
+              <role>developers</role>
+          </roles>
+      </contributor>
+  </contributors>
+  <scm>
+      <connection></connection>
+      <developerConnection></developerConnection>
+  </scm>
+  <ciManagement>
+      <system>jfrogpipelines</system>
+      <url>tbd</url>
+  </ciManagement>
+  <name>JFrog Reproducible Build Parent</name>
+  <url>http://www.jfrog.com</url>
+  <properties>
+    <project.build.outputTimestamp>2020-10-03T20:00:00Z</project.build.outputTimestamp>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-artifact-plugin</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+  </dependencies>
+  <modules>
+      <module>junit4</module>
+  </modules>
+  <!--
+  <distributionManagement>
+    <repository>
+        <id>My_Artifactory_Releases</id>
+        <name>My_Artifactory-releases</name>
+        <url>http://my.maven.repository.internal/artifactory/release</url>
+    </repository>
+    <snapshotRepository>
+        <id>My_Artifactory_Snapshots</id>
+        <name>My_Artifactory-snapshots</name>
+        <url>http://my.maven.repository.internal/artifactory/snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+  -->
+</project>

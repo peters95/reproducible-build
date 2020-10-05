@@ -1,0 +1,7 @@
+    <!-- JFROG_REPRODUCIBLE_BUILD_INJECTOR -->
+    <parent>
+        <groupId>org.jfrog.reproducible</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+</project>

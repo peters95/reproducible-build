@@ -1,0 +1,3 @@
+[submodule "junit4"]
+	path = junit4
+	url = https://github.com/peters95/junit4.git
