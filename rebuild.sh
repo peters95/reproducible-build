@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-echo "[INFO] REBUILD STARTED ON CHILD DIRECTORIES"
-for dir in */ ; do
+echo "[INFO] REBUILD STARTED"
+INJECTDIRS=(junit4)
+BASEDIR=$(pwd)
+echo "[INFO] INJECTING REBUILD FILES"
+for dir in $INJECTDIRS; do
     echo "[INFO] INJECTING REBUILD INTO $dir"
-    cp rebuild.injector $dir/rebuild.sh
+    cp injector.sh $dir/rebuild.sh
     chmod 0755 $dir/rebuild.sh
     cd $dir
     POM=$(sed '$d' pom.xml)
@@ -11,8 +14,21 @@ for dir in */ ; do
     echo "[INFO] BUILDING $dir"
     mv pom.xml pom.xml.org
     cp pom.xml.new pom.xml
-    ./rebuild.sh
-    cp pom.xml.org pom.xml
-    rm pom.xml.org rebuild.sh pom.xml.new
+    cd $BASEDIR
+done
+echo "[INFO] EXECUTING REPRODUCIBLE BUILDS"
+REBUILDS=$(find . -name 'rebuild.sh' | grep -v "\./rebuild.sh")
+for script in $REBUILDS; do
+  SCRIPTDIR=$(echo "$script" | sed 's|\(.*\)/.*|\1|')
+  cd $SCRIPTDIR
+  ./rebuild.sh
+  cd $BASEDIR
+done
+echo "[INFO] CLEANING UP REBUILD FILES"
+for dir in $INJECTDIRS; do
+  cd $dir
+  cp pom.xml.org pom.xml
+  rm pom.xml.org rebuild.sh pom.xml.new
+  cd $BASEDIR
 done
 echo "[INFO] COMPLETED REBUILD"
