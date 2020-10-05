@@ -1,9 +1,3 @@
 [submodule "junit4"]
 	path = junit4
 	url = https://github.com/peters95/junit4.git
-[submodule "apache/commons-parent"]
-	path = apache/commons-parent
-	url = https://github.com/apache/commons-parent.git
-[submodule "apache/commons-logging"]
-	path = apache/commons-logging
-	url = https://github.com/apache/commons-logging.git
