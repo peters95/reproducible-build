@@ -57,20 +57,21 @@
         </dependency>
   </dependencies>
   <modules>
+      <module>apache/apache-21</module>
       <module>junit4</module>
   </modules>
-  <!--
-  <distributionManagement>
-    <repository>
-        <id>My_Artifactory_Releases</id>
-        <name>My_Artifactory-releases</name>
-        <url>http://my.maven.repository.internal/artifactory/release</url>
-    </repository>
-    <snapshotRepository>
-        <id>My_Artifactory_Snapshots</id>
-        <name>My_Artifactory-snapshots</name>
-        <url>http://my.maven.repository.internal/artifactory/snapshot</url>
-    </snapshotRepository>
-  </distributionManagement>
-  -->
+    <!--
+    <distributionManagement>
+      <repository>
+          <id>My_Artifactory_Releases</id>
+          <name>My_Artifactory-releases</name>
+          <url>http://my.maven.repository.internal/artifactory/release</url>
+      </repository>
+      <snapshotRepository>
+          <id>My_Artifactory_Snapshots</id>
+          <name>My_Artifactory-snapshots</name>
+          <url>http://my.maven.repository.internal/artifactory/snapshot</url>
+      </snapshotRepository>
+    </distributionManagement>
+    -->
 </project>
