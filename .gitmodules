@@ -7,3 +7,6 @@
 [submodule "apache/commons-logging"]
 	path = apache/commons-logging
 	url = https://github.com/peters95/commons-logging.git
+[submodule "quickperf"]
+	path = quickperf
+	url = https://github.com/peters95/quickperf.git

@@ -17,27 +17,27 @@ VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpres
 PROJECT=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.artifactId | grep -v '\[')
 # Build first time
 mvn clean verify -e -DskipTests artifact:buildinfo
-mv target/$PROJECT-$VERSION.buildinfo /tmp
-mv target/$PROJECT-$VERSION.jar /tmp
+JARFILES=$(find . -name '*.jar')
+for file in $JARFILES; do
+  mv $file /tmp
+done
 # Rebuild second time and compare builds
 mvn clean verify -e -DskipTests artifact:buildinfo
-mv /tmp/$PROJECT-$VERSION.buildinfo target/$PROJECT-$VERSION-org.buildinfo
-mv /tmp/$PROJECT-$VERSION.jar target/$PROJECT-$VERSION-org.jar
+NEWJARFILES=$(find . -name '*.jar')
+for file in $NEWJARFILES; do
+  filename=$(echo "$file" | sed 's|.*/||')
+  # Strip out any filesystem disorder
+  strip-nondeterminism /tmp/$filename
+  strip-nondeterminism $file
+  diffoscope /tmp/$filename $file
+  exitCode=$?
+  if [ "$exitCode" -gt "0" ]
+  then
+    echo "[FAILURE] Build was not reproducible check diffoscope output above."
+    exit $exitCode
+  fi
+done
+echo "[SUCCESS] Build has been verified to be reproducible."
 
-# Strip out any filesystem disorder
-strip-nondeterminism target/$PROJECT-$VERSION-org.jar
-strip-nondeterminism target/$PROJECT-$VERSION.jar
-
-# Use diffoscope to compare and verify builds are reproducible
-diffoscope target/$PROJECT-$VERSION-org.jar target/$PROJECT-$VERSION.jar
-
-exitCode=$?
-if [[ "$exitCode" =~ (0) ]]
-then
-  echo "[SUCCESS] Build has been verified to be reproducible."
-else
-  echo "[FAILURE] Build was not reproducible check diffoscope output above."
-fi
-exit $exitCode
 
 

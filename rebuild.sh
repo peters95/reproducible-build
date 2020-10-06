@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
 echo "[INFO] REBUILD STARTED"
-INJECTDIRS=(junit4)
+INJECTDIRS=("junit4" "quickperf")
 BASEDIR=$(pwd)
 echo "[INFO] INJECTING REBUILD FILES"
-for dir in $INJECTDIRS; do
+for dir in "${INJECTDIRS[@]}"; do
     echo "[INFO] INJECTING REBUILD INTO $dir"
     cp injector.sh $dir/rebuild.sh
     chmod 0755 $dir/rebuild.sh
     cd $dir
-    POM=$(sed '$d' pom.xml)
-    echo "$POM" > pom.xml.new
-    cat ../pom.injector >> pom.xml.new
-    echo "[INFO] BUILDING $dir"
-    mv pom.xml pom.xml.org
-    cp pom.xml.new pom.xml
+    EXISTS=$(cat pom.xml | grep "JFROG_REPRODUCIBLE_BUILD_INJECTOR" | wc -l)
+    if [[ "$EXISTS" =~ (0) ]]
+    then
+      POM=$(sed '$d' pom.xml)
+      echo "$POM" > pom.xml.new
+      cat ../pom.injector >> pom.xml.new
+      echo "[INFO] BUILDING $dir"
+      mv pom.xml pom.xml.org
+      cp pom.xml.new pom.xml
+    fi
     cd $BASEDIR
 done
 echo "[INFO] EXECUTING REPRODUCIBLE BUILDS"
@@ -25,7 +29,7 @@ for script in $REBUILDS; do
   cd $BASEDIR
 done
 echo "[INFO] CLEANING UP REBUILD FILES"
-for dir in $INJECTDIRS; do
+for dir in "${INJECTDIRS[@]}"; do
   cd $dir
   cp pom.xml.org pom.xml
   rm pom.xml.org rebuild.sh pom.xml.new
